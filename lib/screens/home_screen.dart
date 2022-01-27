@@ -6,6 +6,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 const activeColor = Color(0xFF0A0C10);
 const inactiveColor = Color(0xFF272B33);
 
+enum Gender{
+  male,
+  female
+}
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key,}) : super(key: key);
 
@@ -17,9 +22,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Color maleCardColour = inactiveColor;
   Color femaleCardColour = inactiveColor;
 
-  void UpdateColour(int gender){
+  void UpdateColour(Gender selected){
     //Male card pressed
-    if (gender == 1){
+    if (selected == Gender.male){
       if (maleCardColour == inactiveColor){
         maleCardColour = activeColor;
         femaleCardColour = inactiveColor;
@@ -28,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     }
     //Female card pressed
-    if (gender == 2){
+    if (selected == Gender.female){
       if (femaleCardColour == inactiveColor){
         femaleCardColour = activeColor;
         maleCardColour = inactiveColor;
@@ -51,12 +56,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: GestureDetector(
                   onTap: () {
                     setState(() {
-                      UpdateColour(1);
+                      UpdateColour(Gender.male);
                     });
                   },
                   child: ReusableContainer(
                       color: maleCardColour,
-                      cardContent: iconContent(
+                      cardContent: const iconContent(
                         icon: FontAwesomeIcons.mars,
                         label: 'MALE',
                       )
@@ -67,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: GestureDetector(
                   onTap: () {
                     setState(() {
-                      UpdateColour(2);
+                      UpdateColour(Gender.female);
                     });
                   },
                   child: ReusableContainer(
