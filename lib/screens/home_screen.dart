@@ -3,10 +3,40 @@ import 'package:flutter_layout_app/components/sex_content.dart';
 import 'package:flutter_layout_app/widget/our_container.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({
-    Key? key,
-  }) : super(key: key);
+const activeColor = Color(0xFF0A0C10);
+const inactiveColor = Color(0xFF272B33);
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key,}) : super(key: key);
+
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  Color maleCardColour = inactiveColor;
+  Color femaleCardColour = inactiveColor;
+
+  void UpdateColour(int gender){
+    //Male card pressed
+    if (gender == 1){
+      if (maleCardColour == inactiveColor){
+        maleCardColour = activeColor;
+        femaleCardColour = inactiveColor;
+      } else{
+        maleCardColour = inactiveColor;
+      }
+    }
+    //Female card pressed
+    if (gender == 2){
+      if (femaleCardColour == inactiveColor){
+        femaleCardColour = activeColor;
+        maleCardColour = inactiveColor;
+      } else{
+        femaleCardColour = inactiveColor;
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +49,14 @@ class HomeScreen extends StatelessWidget {
             children: [
               Expanded(
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    setState(() {
+                      UpdateColour(1);
+                    });
+                  },
                   child: ReusableContainer(
-                      cardContent: const iconContent(
+                      color: maleCardColour,
+                      cardContent: iconContent(
                         icon: FontAwesomeIcons.mars,
                         label: 'MALE',
                       )
@@ -30,21 +65,27 @@ class HomeScreen extends StatelessWidget {
               ),
               Expanded(
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    setState(() {
+                      UpdateColour(2);
+                    });
+                  },
                   child: ReusableContainer(
-                      cardContent: const iconContent(
-                        icon: FontAwesomeIcons.venus,
-                        label: 'FEMALE',
-                      )
+                    color: femaleCardColour,
+                    cardContent: const iconContent(
+                      icon: FontAwesomeIcons.venus,
+                      label: 'FEMALE',
+                    ),
                   ),
                 )
               ),
             ],
           )
         ),
-        Expanded(
+        const Expanded(
           child: ReusableContainer(
-            cardContent: const Center(
+            color: inactiveColor,
+            cardContent: Center(
                 child: Text('hello')
             ),
           )
@@ -52,17 +93,19 @@ class HomeScreen extends StatelessWidget {
         Expanded(
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
+            children: const [
               Expanded(
                   child: ReusableContainer(
-                    cardContent: const Center(
+                    color: inactiveColor,
+                    cardContent: Center(
                         child: Text('hello')
                     ),
                   )
               ),
               Expanded(
                 child: ReusableContainer(
-                  cardContent: const Center(
+                  color: inactiveColor,
+                  cardContent: Center(
                       child: Text('hello')
                   ),
                 )
