@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_layout_app/components/sex_content.dart';
+import 'package:flutter_layout_app/components/weight_and_age.dart';
 import 'package:flutter_layout_app/styles/constants.dart';
+import 'package:flutter_layout_app/widget/ourRounded_button.dart';
 import 'package:flutter_layout_app/widget/our_container.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -18,6 +20,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   Gender selected = Gender.noneSelected;
   int height = 180;
+  int weight = 50;
+  int ages = 20;
 
   @override
   Widget build(BuildContext context) {
@@ -88,17 +92,29 @@ class _HomeScreenState extends State<HomeScreen> {
                     )
                   ],
                 ),
-                Slider(
-                  value: height.toDouble(),
-                  min: 120.0,
-                  max: 220.0,
-                  activeColor: const Color(0xFFEB1555),
-                  inactiveColor: const Color(0xFF8DBE98),
-                  onChanged: (double newHeight) {
-                    setState(() {
-                      height = newHeight.round();
-                    });
-                  }
+                SliderTheme(
+                  data: SliderTheme.of(context).copyWith(
+                    thumbColor: kButtonColor,
+                    activeTrackColor: Colors.white,
+                    inactiveTrackColor: const Color(0xFF8DBE98),
+                    overlayColor: const Color(0x15EB1555),
+                    thumbShape: const RoundSliderThumbShape(
+                      enabledThumbRadius: 15.0
+                    ),
+                    overlayShape: const RoundSliderOverlayShape(
+                      overlayRadius: 30.0
+                    ),
+                  ),
+                  child: Slider(
+                    value: height.toDouble(),
+                    min: 120.0,
+                    max: 220.0,
+                    onChanged: (double newHeight) {
+                      setState(() {
+                        height = newHeight.round();
+                      });
+                    }
+                  ),
                 )
               ],
             ),
@@ -107,15 +123,23 @@ class _HomeScreenState extends State<HomeScreen> {
         Expanded(
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: const [
+            children: [
               Expanded(
-                  child: ReusableContainer(
-                    color: kInactiveColor,
-                  )
+                child: ReusableContainer(
+                  color: kInactiveColor,
+                  cardContent: BottomDescription(
+                    title: 'WEIGHT',
+                    value: weight,
+                  ),
+                )
               ),
               Expanded(
                 child: ReusableContainer(
                   color: kInactiveColor,
+                  cardContent: BottomDescription(
+                    title: 'AGE',
+                    value: ages,
+                  ),
                 )
               ),
             ],
@@ -125,3 +149,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
+
+
